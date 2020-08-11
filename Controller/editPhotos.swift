@@ -117,7 +117,7 @@ class editPhotos: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource {
     
     @IBSegueAction func readyRender(_ coder: NSCoder) -> finalRender? {
         let renderHelper = finalRender(coder: coder)
-        renderHelper?.parameter = addImage(addPic: versionSecondPhoto.image)
+        renderHelper?.passedImage = versionSecondPhoto.image
         renderHelper?.passedWidth = self.width
         renderHelper?.passedHeight = self.height
         renderHelper?.passedAngle = self.fixedAngle

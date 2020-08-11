@@ -14,7 +14,7 @@ class finalRender: UIViewController {
     @IBOutlet weak var renderSizePhoto: UIImageView!
     @IBOutlet weak var brightNessSlider: UISlider!
     
-  
+    var passedImage: UIImage?
     var passedWidth: CGFloat!
     var passedHeight: CGFloat!
     var passedAngle: CGFloat!
@@ -24,7 +24,7 @@ class finalRender: UIViewController {
    override func viewDidLoad() {
         super.viewDidLoad()
  
-       renderSizePhoto.image = parameter.addPic
+       renderSizePhoto.image = passedImage
        renderSizePhoto.frame = CGRect(x: 52, y: 120, width: passedWidth, height: passedHeight)
        renderSizePhoto.transform = CGAffineTransform(rotationAngle: passedAngle)
     }
@@ -32,13 +32,13 @@ class finalRender: UIViewController {
 
     
     @IBAction func changeBrightness(_ sender: UISlider) {
-           let ciImage = CIImage(image: parameter.addPic!)
+           let ciImage = CIImage(image: passedImage!)
            let brightness = CIFilter(name: "CIColorControls")
             brightness?.setValue(ciImage, forKey: kCIInputImageKey)
             brightness?.setValue(brightNessSlider.value, forKey: kCIInputBrightnessKey)
             
         if let transBrightImage = brightness?.outputImage,let resizeOutputImage_ = CIContext().createCGImage(transBrightImage, from: transBrightImage.extent){
-            let cgOutputImage = transBrightImage.oriented(CGImagePropertyOrientation(parameter.addPic!.imageOrientation))
+            let cgOutputImage = transBrightImage.oriented(CGImagePropertyOrientation(passedImage!.imageOrientation))
             let finalBrightnessImage = UIImage(ciImage: cgOutputImage)
             renderSizePhoto.image = finalBrightnessImage
           }
@@ -57,7 +57,7 @@ class finalRender: UIViewController {
    
     @IBAction func renderFilter(_ sender: UIButton) {
         if sender.tag == 0{
-             renderSizePhoto.image = parameter.addPic
+             renderSizePhoto.image = passedImage
          }else{
              buttonNumber = sender.tag
              startChangePic()
@@ -68,14 +68,14 @@ class finalRender: UIViewController {
     func startChangePic(){
      let filter=["","CIColorInvert","CISepiaTone","CIFalseColor","CIColorPosterize","CIPhotoEffectProcess","CIPhotoEffectInstant","CIPhotoEffectNoir","CIPhotoEffectTransfer","CIPhotoEffectChrome"]
         
-        if parameter.addPic != nil{
-            let turnToCiImage = CIImage(image: renderSizePhoto.image!)
+        if passedImage != nil{
+            let turnToCiImage = CIImage(image: passedImage!)
             
             if let photoFilter = CIFilter(name:filter[buttonNumber]){
                 photoFilter.setValue(turnToCiImage, forKey: kCIInputImageKey)
                 
                 if let outputFilterImage = photoFilter.outputImage {
-                    let orientCIImage = outputFilterImage.oriented(CGImagePropertyOrientation(parameter.addPic!.imageOrientation))
+                    let orientCIImage = outputFilterImage.oriented(CGImagePropertyOrientation(passedImage!.imageOrientation))
                     let finalImage = UIImage(ciImage: orientCIImage)
                     renderSizePhoto.image = finalImage
                 }
