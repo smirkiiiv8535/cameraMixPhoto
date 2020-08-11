@@ -16,10 +16,11 @@ class decidePhotoScreen: UIViewController, UIImagePickerControllerDelegate & UIN
         super.viewDidLoad()
 
     }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage{
            
-            UIImageWriteToSavedPhotosAlbum(pickedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    UIImageWriteToSavedPhotosAlbum(pickedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 
             dismiss(animated: true, completion: nil)
         }

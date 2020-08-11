@@ -31,7 +31,7 @@
 		1734B2DF24DE3F9C00EBF106 /* selectHistoryPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectHistoryPic.swift; sourceTree = "<group>"; };
 		1734B2E124DE437C00EBF106 /* editPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editPhotos.swift; sourceTree = "<group>"; };
 		1740D87724E1540900AC8775 /* addPhotoProtoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addPhotoProtoType.swift; sourceTree = "<group>"; };
-		178289C224E0C2E200126A07 /* finalRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = finalRender.swift; sourceTree = "<group>"; };
+		178289C224E0C2E200126A07 /* finalRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = finalRender.swift; sourceTree = "<group>"; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,11 +48,8 @@
 		1734B2BB24DE362A00EBF106 = {
 			isa = PBXGroup;
 			children = (
-				178289C224E0C2E200126A07 /* finalRender.swift */,
-				1734B2E124DE437C00EBF106 /* editPhotos.swift */,
-				1734B2DF24DE3F9C00EBF106 /* selectHistoryPic.swift */,
-				1734B2DB24DE3EA800EBF106 /* decidePhotoScreen.swift */,
 				1734B2C624DE362A00EBF106 /* cameraMixPhoto */,
+				1750E7CE24E2D24100372645 /* Controller */,
 				1734B2C524DE362A00EBF106 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,14 +66,33 @@
 			isa = PBXGroup;
 			children = (
 				1734B2C724DE362A00EBF106 /* AppDelegate.swift */,
-				1740D87724E1540900AC8775 /* addPhotoProtoType.swift */,
 				1734B2C924DE362A00EBF106 /* SceneDelegate.swift */,
+				1750E7CF24E2D26E00372645 /* Model */,
 				1734B2CD24DE362A00EBF106 /* Main.storyboard */,
 				1734B2D024DE362B00EBF106 /* Assets.xcassets */,
 				1734B2D224DE362B00EBF106 /* LaunchScreen.storyboard */,
 				1734B2D524DE362B00EBF106 /* Info.plist */,
 			);
 			path = cameraMixPhoto;
+			sourceTree = "<group>";
+		};
+		1750E7CE24E2D24100372645 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				178289C224E0C2E200126A07 /* finalRender.swift */,
+				1734B2E124DE437C00EBF106 /* editPhotos.swift */,
+				1734B2DF24DE3F9C00EBF106 /* selectHistoryPic.swift */,
+				1734B2DB24DE3EA800EBF106 /* decidePhotoScreen.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1750E7CF24E2D26E00372645 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1740D87724E1540900AC8775 /* addPhotoProtoType.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,7 +323,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = smirkiiivAndy.cameraMixPhoto;
+				PRODUCT_BUNDLE_IDENTIFIER = smirkiiivAndy.cameraMix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,7 +341,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = smirkiiivAndy.cameraMixPhoto;
+				PRODUCT_BUNDLE_IDENTIFIER = smirkiiivAndy.cameraMix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

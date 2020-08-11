@@ -14,40 +14,36 @@ class finalRender: UIViewController {
     @IBOutlet weak var renderSizePhoto: UIImageView!
     @IBOutlet weak var brightNessSlider: UISlider!
     
-    var preparePhotoEffect: UIImage!
+  
     var passedWidth: CGFloat!
     var passedHeight: CGFloat!
     var passedAngle: CGFloat!
-    
-    var buttonNumber = 0
-    
-    let filterMap = ["","CIColorInvert","CISepiaTone","CIFalseColor","CIColorPosterize","CIPhotoEffectProcess","CIPhotoEffectInstant","CIPhotoEffectNoir","CIPhotoEffectTransfer","CIPhotoEffectChrome"]
+    var buttonNumber:Int = 0
+    var parameter = addImage()
     
    override func viewDidLoad() {
         super.viewDidLoad()
  
-       renderSizePhoto.image = preparePhotoEffect
+       renderSizePhoto.image = parameter.addPic
        renderSizePhoto.frame = CGRect(x: 52, y: 120, width: passedWidth, height: passedHeight)
        renderSizePhoto.transform = CGAffineTransform(rotationAngle: passedAngle)
-    
     }
     
-    
+
     
     @IBAction func changeBrightness(_ sender: UISlider) {
-           let ciImage = CIImage(image: preparePhotoEffect)
-            let brightness = CIFilter(name: "CIColorControls")
+           let ciImage = CIImage(image: parameter.addPic!)
+           let brightness = CIFilter(name: "CIColorControls")
             brightness?.setValue(ciImage, forKey: kCIInputImageKey)
             brightness?.setValue(brightNessSlider.value, forKey: kCIInputBrightnessKey)
             
-        if let transBrightImage = brightness?.outputImage,let resizeOutputImage = CIContext().createCGImage(transBrightImage, from: transBrightImage.extent){
-            let finalBrightnessImage = UIImage(cgImage: resizeOutputImage)
+        if let transBrightImage = brightness?.outputImage,let resizeOutputImage_ = CIContext().createCGImage(transBrightImage, from: transBrightImage.extent){
+            let cgOutputImage = transBrightImage.oriented(CGImagePropertyOrientation(parameter.addPic!.imageOrientation))
+            let finalBrightnessImage = UIImage(ciImage: cgOutputImage)
             renderSizePhoto.image = finalBrightnessImage
           }
         
         }
-
-   
  
     @IBAction func sharePictures(_ sender: UIButton) {
         
@@ -57,28 +53,29 @@ class finalRender: UIViewController {
         }
         
     }
-   
     
+   
     @IBAction func renderFilter(_ sender: UIButton) {
         if sender.tag == 0{
-            renderSizePhoto.image = preparePhotoEffect
-        }else{
-            buttonNumber = sender.tag
-            startChangePic()
-        }
+             renderSizePhoto.image = parameter.addPic
+         }else{
+             buttonNumber = sender.tag
+             startChangePic()
+         }
     }
     
     
-    
     func startChangePic(){
-        if renderSizePhoto.image != nil{
+     let filter=["","CIColorInvert","CISepiaTone","CIFalseColor","CIColorPosterize","CIPhotoEffectProcess","CIPhotoEffectInstant","CIPhotoEffectNoir","CIPhotoEffectTransfer","CIPhotoEffectChrome"]
+        
+        if parameter.addPic != nil{
             let turnToCiImage = CIImage(image: renderSizePhoto.image!)
             
-            if let photoFilter = CIFilter(name:self.filterMap[buttonNumber]){
+            if let photoFilter = CIFilter(name:filter[buttonNumber]){
                 photoFilter.setValue(turnToCiImage, forKey: kCIInputImageKey)
                 
                 if let outputFilterImage = photoFilter.outputImage {
-                    let orientCIImage = outputFilterImage.oriented(CGImagePropertyOrientation(preparePhotoEffect.imageOrientation))
+                    let orientCIImage = outputFilterImage.oriented(CGImagePropertyOrientation(parameter.addPic!.imageOrientation))
                     let finalImage = UIImage(ciImage: orientCIImage)
                     renderSizePhoto.image = finalImage
                 }

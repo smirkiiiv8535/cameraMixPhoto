@@ -22,10 +22,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Need You Camera Access</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access To Your album</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Access To  Save Photos to Your album</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access To Your album</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

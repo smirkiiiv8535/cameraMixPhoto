@@ -11,5 +11,5 @@ import UIKit
 
 
 struct addImage{
-    var addFirstImage : UIImage?  = UIImage()
+    var addPic : UIImage?  = UIImage()
 }

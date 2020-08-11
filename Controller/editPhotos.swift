@@ -17,7 +17,6 @@ class editPhotos: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource {
     var height :CGFloat = 310
     var initAngle = 360
     var fixedAngle :CGFloat = 0
-    
     var ratioMap = ["","1:1","4:5","16:9","5:7","14:11","3:4",""]
     
     
@@ -25,23 +24,31 @@ class editPhotos: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         versionSecondPhoto.image = passFirstEdit.image
-       setForPick()
+        setForPick()
     }
     
+    func setForPick(){
+         pickerView = UIPickerView()
+         pickerView.dataSource = self
+         pickerView.delegate = self
+         pickerView.frame = CGRect(x: 36, y: 680, width: 342, height: 182)
+         view.addSubview(pickerView)
+     }
+    
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        ratioMap.count
+        return ratioMap.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-           return ratioMap[row]
+        return ratioMap[row]
        }
     
-    func pickerView(_ pickerView: UIPickerView,
-      didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView,didSelectRow row: Int, inComponent component: Int) {
         
         switch row {
         case 0:
@@ -61,40 +68,26 @@ class editPhotos: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource {
         default :
             height = width * 1
         }
-        
-versionSecondPhoto.frame = CGRect(x: 52, y: 120, width: width, height: height)
-        
+       versionSecondPhoto.frame = CGRect(x: 52, y: 120, width: width, height: height)
     }
     
-    
-    func setForPick(){
-            
-        pickerView = UIPickerView()
-        pickerView.dataSource = self
-        pickerView.delegate = self
-            
-        pickerView.frame = CGRect(x: 36, y: 680, width: 342, height: 182)
-        view.addSubview(pickerView)
-    }
-    
-
     @IBAction func turnLeft(_ sender: UIButton) {
         switch initAngle {
          case 360 :
             initAngle = 270
-          versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi*3/2)
+            versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi*3/2)
             fixedAngle = CGFloat.pi*3/2
          case 270 :
             initAngle = 180
-              versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             fixedAngle = CGFloat.pi
          case 180 :
             initAngle = 90
-               versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
+            versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             fixedAngle = CGFloat.pi/2
         default:
             initAngle = 360
-             versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi*2)
+            versionSecondPhoto.transform = CGAffineTransform(rotationAngle: CGFloat.pi*2)
             fixedAngle = CGFloat.pi*2
             break
         }
@@ -124,7 +117,7 @@ versionSecondPhoto.frame = CGRect(x: 52, y: 120, width: width, height: height)
     
     @IBSegueAction func readyRender(_ coder: NSCoder) -> finalRender? {
         let renderHelper = finalRender(coder: coder)
-        renderHelper?.preparePhotoEffect = versionSecondPhoto.image
+        renderHelper?.parameter = addImage(addPic: versionSecondPhoto.image)
         renderHelper?.passedWidth = self.width
         renderHelper?.passedHeight = self.height
         renderHelper?.passedAngle = self.fixedAngle
