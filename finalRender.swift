@@ -26,24 +26,26 @@ class finalRender: UIViewController {
    override func viewDidLoad() {
         super.viewDidLoad()
  
-        // Do any additional setup after loading the view.
        renderSizePhoto.image = preparePhotoEffect
        renderSizePhoto.frame = CGRect(x: 52, y: 120, width: passedWidth, height: passedHeight)
        renderSizePhoto.transform = CGAffineTransform(rotationAngle: passedAngle)
+    
     }
     
     
     
     @IBAction func changeBrightness(_ sender: UISlider) {
            let ciImage = CIImage(image: preparePhotoEffect)
-        
             let brightness = CIFilter(name: "CIColorControls")
             brightness?.setValue(ciImage, forKey: kCIInputImageKey)
             brightness?.setValue(brightNessSlider.value, forKey: kCIInputBrightnessKey)
             
-            let transBrightImage = brightness?.outputImage
-            renderSizePhoto.image = UIImage(ciImage: transBrightImage!)
-            }
+        if let transBrightImage = brightness?.outputImage,let resizeOutputImage = CIContext().createCGImage(transBrightImage, from: transBrightImage.extent){
+            let finalBrightnessImage = UIImage(cgImage: resizeOutputImage)
+            renderSizePhoto.image = finalBrightnessImage
+          }
+        
+        }
 
    
  
@@ -75,16 +77,32 @@ class finalRender: UIViewController {
             if let photoFilter = CIFilter(name:self.filterMap[buttonNumber]){
                 photoFilter.setValue(turnToCiImage, forKey: kCIInputImageKey)
                 
-                if let outputFilterImage = photoFilter.outputImage, let resizeOutputImage = CIContext().createCGImage(outputFilterImage, from: outputFilterImage.extent) {
-                    let finalimage = UIImage(cgImage: resizeOutputImage)
-                    renderSizePhoto.image = finalimage
+                if let outputFilterImage = photoFilter.outputImage {
+                    let orientCIImage = outputFilterImage.oriented(CGImagePropertyOrientation(preparePhotoEffect.imageOrientation))
+                    let finalImage = UIImage(ciImage: orientCIImage)
+                    renderSizePhoto.image = finalImage
                 }
             }
         }
     }
-    
-    
-    
 }
 
+
+
+extension CGImagePropertyOrientation {
+    init(_ uiOrientation: UIImage.Orientation) {
+        switch uiOrientation {
+            case .up: self = .up
+            case .upMirrored: self = .upMirrored
+            case .down: self = .down
+            case .downMirrored: self = .downMirrored
+            case .left: self = .left
+            case .leftMirrored: self = .leftMirrored
+            case .right: self = .right
+            case .rightMirrored: self = .rightMirrored
+        @unknown default:
+            self = .up
+        }
+    }
+}
 
