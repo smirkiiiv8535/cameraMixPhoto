@@ -10,12 +10,15 @@ import UIKit
 
 class finalRender: UIViewController {
 
-    var preparePhotoEffect: UIImage!
+
     @IBOutlet weak var renderSizePhoto: UIImageView!
+    @IBOutlet weak var brightNessSlider: UISlider!
+    
+    var preparePhotoEffect: UIImage!
     var passedWidth: CGFloat!
     var passedHeight: CGFloat!
     var passedAngle: CGFloat!
-    @IBOutlet weak var brightNessSlider: UISlider!
+    
     var buttonNumber = 0
     
     let filterMap = ["","CIColorInvert","CISepiaTone","CIFalseColor","CIColorPosterize","CIPhotoEffectProcess","CIPhotoEffectInstant","CIPhotoEffectNoir","CIPhotoEffectTransfer","CIPhotoEffectChrome"]
@@ -29,21 +32,6 @@ class finalRender: UIViewController {
        renderSizePhoto.transform = CGAffineTransform(rotationAngle: passedAngle)
     }
     
-    
-    func startChangePic(){
-        if renderSizePhoto.image != nil{
-            let turnToCiImage = CIImage(image: renderSizePhoto.image!)
-            
-            if let photoFilter = CIFilter(name:self.filterMap[buttonNumber]){
-                photoFilter.setValue(turnToCiImage, forKey: kCIInputImageKey)
-                
-                if let outputFilterImage = photoFilter.outputImage, let resizeOutputImage = CIContext().createCGImage(outputFilterImage, from: outputFilterImage.extent) {
-                    let finalimage = UIImage(cgImage: resizeOutputImage)
-                    renderSizePhoto.image = finalimage
-                }
-            }
-        }
-    }
     
     
     @IBAction func changeBrightness(_ sender: UISlider) {
@@ -79,4 +67,24 @@ class finalRender: UIViewController {
     }
     
     
+    
+    func startChangePic(){
+        if renderSizePhoto.image != nil{
+            let turnToCiImage = CIImage(image: renderSizePhoto.image!)
+            
+            if let photoFilter = CIFilter(name:self.filterMap[buttonNumber]){
+                photoFilter.setValue(turnToCiImage, forKey: kCIInputImageKey)
+                
+                if let outputFilterImage = photoFilter.outputImage, let resizeOutputImage = CIContext().createCGImage(outputFilterImage, from: outputFilterImage.extent) {
+                    let finalimage = UIImage(cgImage: resizeOutputImage)
+                    renderSizePhoto.image = finalimage
+                }
+            }
+        }
+    }
+    
+    
+    
 }
+
+
